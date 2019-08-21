@@ -38,7 +38,7 @@ vec2 pre(in vec2 uv, in int layer) {
     // uv = (uv - .5) * 1.3 + .5;
 
     if (mod(time, .71) < .1 || mod(time, 1.31) < .07) {
-      float t = (sin(time * 3.) * 0.5 + 0.5) * 0.03;
+      float t = (sin(time * 3.) * 0.5 + 0.5) * 0.1 * sin(uv.y * 37. + time * 3.);
       uv.x += sin(uv.y * 800.) * sin(uv.y * 1500.) * t;
     }
   }
@@ -51,9 +51,12 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   c = texture2D(tex, uv);
 
   if (layer == 2) {
-    if (mod(time, .71) < .1 || mod(time, 1.31) < .07) {
-      float t = (sin(time * 3.) * 0.5 + 0.5) * 0.03;
-      uv.x += sin(uv.y * 800.) * sin(uv.y * 1500.) * t;
+    float t = (
+      sin(floor(uv.y * 19. + time * .3 + floor(time *13.7))) *
+      sin(floor(uv.y * 27. + time * -.8 + floor(time * -5.7)))
+    );
+    if (abs(t) > .8) {
+      c.g += texture2D(tex, uv + vec2(t * 0.01, 0)).r;
     }
   }
 
@@ -73,5 +76,5 @@ void main() {
   vec4 c1 = draw(v1, uv, 1);
   vec4 c2 = draw(v2, uv, 2);
 
-  gl_FragColor = c0 + c2 / c1;
+  gl_FragColor = c0 + c2;
 }
