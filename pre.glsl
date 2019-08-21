@@ -9,3 +9,16 @@ vec2 iShiftX(vec2 uv) {
   }
   return uv;
 }
+
+vec2 iHoldX(vec2 uv, float t) {
+  if (t > .0) {
+    float tt = (sin(uv.y *8. + time) * sin(uv.y *19.)) * 0.5 + .5;
+    if (tt < t) {
+      uv.x = fract(uv.y +time * 0.1);
+    }
+
+    // uv.x = fract(time * 0.1);
+
+  }
+  return uv;
+}

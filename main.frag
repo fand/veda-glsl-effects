@@ -37,8 +37,14 @@ uniform float volume;
 #include "./post.glsl"
 
 vec2 pre(in vec2 uv, in int layer) {
+  if (layer == 0) {
+    uv = iHoldX(uv, fract(time));
+  }
+  if (layer == 1) {
+    uv = iHoldX(uv, 1.);
+  }
   if (layer == 2) {
-    // uv = iZoomOut(uv);
+    uv = iZoomOut(uv);
     uv = iShiftX(uv);
   }
 
@@ -69,5 +75,5 @@ void main() {
   vec4 c1 = draw(v1, uv, 1);
   vec4 c2 = draw(v2, uv, 2);
 
-  gl_FragColor = c0 + c2;
+  gl_FragColor = mix(c0, c1, clamp(0., 1., sin(time) + .5)) + c2;
 }
