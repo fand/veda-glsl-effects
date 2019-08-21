@@ -33,8 +33,8 @@ uniform float volume;
 #define PI 3.141593
 #define SQRT3 1.7320508
 
-vec2 pre(vec2 uv, float layer) {
-  if (layer == 2.) {
+vec2 pre(in vec2 uv, in int layer) {
+  if (layer == 2) {
     // uv = (uv - .5) * 1.3 + .5;
 
     if (mod(time, .71) < .1 || mod(time, 1.31) < .07) {
@@ -46,8 +46,11 @@ vec2 pre(vec2 uv, float layer) {
   return uv;
 }
 
-vec4 post(vec4 c, vec2 uv, float layer) {
-  if (layer == 2.) {
+vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
+  vec4 c = vec4(0);
+  c = texture2D(tex, uv);
+
+  if (layer == 2) {
     if (mod(time, .71) < .1 || mod(time, 1.31) < .07) {
       float t = (sin(time * 3.) * 0.5 + 0.5) * 0.03;
       uv.x += sin(uv.y * 800.) * sin(uv.y * 1500.) * t;
@@ -57,22 +60,18 @@ vec4 post(vec4 c, vec2 uv, float layer) {
   return c;
 }
 
+vec4 draw(in sampler2D tex, in vec2 uv, in int layer) {
+  uv = pre(uv, layer);
+  return post(tex, uv, layer);
+}
+
 void main() {
   vec2 uv = gl_FragCoord.xy / resolution;
   vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
 
-  vec2 uv0 = pre(uv, 0.);
-  vec4 c0 = texture2D(v0, uv0);
-  c0 = post(c0, uv0, 0.);
+  vec4 c0 = draw(v0, uv, 0);
+  vec4 c1 = draw(v1, uv, 1);
+  vec4 c2 = draw(v2, uv, 2);
 
-  // vec2 uv1 = pre(uv, 1.);
-  // vec4 c1 = texture2D(v1, uv1);
-  // c1 = post(c1, uv1, 1.);
-
-  vec2 uv2 = pre(uv, 2.);
-  vec4 c2 = texture2D(v2, uv2);
-  c2 = post(c2, uv2, 2.);
-
-  // gl_FragColor = mix(c0, c1, fract(time * 0.5)) + c2;
-  gl_FragColor = c0 + c2;
+  gl_FragColor = c0 + c2 / c1;
 }
