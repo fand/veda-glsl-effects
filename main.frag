@@ -33,14 +33,13 @@ uniform float volume;
 #define PI 3.141593
 #define SQRT3 1.7320508
 
+#include "./pre.glsl"
+#include "./post.glsl"
+
 vec2 pre(in vec2 uv, in int layer) {
   if (layer == 2) {
-    // uv = (uv - .5) * 1.3 + .5;
-
-    if (mod(time, .71) < .1 || mod(time, 1.31) < .07) {
-      float t = (sin(time * 3.) * 0.5 + 0.5) * 0.1 * sin(uv.y * 37. + time * 3.);
-      uv.x += sin(uv.y * 800.) * sin(uv.y * 1500.) * t;
-    }
+    // uv = iZoomOut(uv);
+    uv = iShiftX(uv);
   }
 
   return uv;
@@ -51,13 +50,7 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   c = texture2D(tex, uv);
 
   if (layer == 2) {
-    float t = (
-      sin(floor(uv.y * 19. + time * .3 + floor(time *13.7))) *
-      sin(floor(uv.y * 27. + time * -.8 + floor(time * -5.7)))
-    );
-    if (abs(t) > .8) {
-      c.g += texture2D(tex, uv + vec2(t * 0.01, 0)).r;
-    }
+    c = oGlitchGreen(c, tex, uv);
   }
 
   return c;
