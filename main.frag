@@ -33,15 +33,17 @@ uniform float volume;
 #define PI 3.141593
 #define SQRT3 1.7320508
 
+#include "./utils.glsl"
 #include "./pre.glsl"
 #include "./post.glsl"
 
 vec2 pre(in vec2 uv, in int layer) {
   if (layer == 0) {
-    uv = iHoldX(uv, fract(time));
+    // uv = iHoldX(uv, fract(time));
+    uv = iKaleido(uv, 1.);
   }
   if (layer == 1) {
-    uv = iHoldX(uv, 1.);
+    // uv = iHoldX(uv, 1.);
   }
   if (layer == 2) {
     uv = iZoomOut(uv);

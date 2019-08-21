@@ -16,9 +16,29 @@ vec2 iHoldX(vec2 uv, float t) {
     if (tt < t) {
       uv.x = fract(uv.y +time * 0.1);
     }
+  }
+  return uv;
+}
 
-    // uv.x = fract(time * 0.1);
+vec2 iKaleido(vec2 uv, float t) {
+  if (t > .0) {
+    uv -= .5;
+    uv = abs(uv);
 
+    uv = rot(uv, -sin(time * .1) * 7.);
+    uv -= .2;
+    uv = abs(uv);
+
+    uv = rot(uv,-sin(time * .13) * -4.7);
+    uv -= .7;
+    uv = abs(uv);
+
+    uv = rot(uv, time * .27);
+    uv += .3;
+    uv = abs(uv);
+
+    uv += .5;
+    uv = fract(uv);
   }
   return uv;
 }
