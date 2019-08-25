@@ -48,6 +48,7 @@ vec2 pre(in vec2 uv, in int layer) {
   if (layer == 2) {
     uv = iZoomOut(uv);
     uv = iShiftX(uv);
+    uv = iLowRes(uv, fract(mod(time, 1.77)) - .7);
   }
 
   return uv;

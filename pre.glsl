@@ -30,15 +30,23 @@ vec2 iKaleido(vec2 uv, float t) {
     uv = abs(uv);
 
     uv = rot(uv,-sin(time * .13) * -4.7);
-    uv -= .7;
+    uv -= .3;
     uv = abs(uv);
 
     uv = rot(uv, time * .27);
-    uv += .3;
+    uv += .35;
     uv = abs(uv);
 
     uv += .5;
     uv = fract(uv);
+  }
+  return uv;
+}
+
+vec2 iLowRes(vec2 uv, float t) {
+  if (t > .0) {
+    vec2 m = vec2(1200, 20);
+    uv = floor(uv * m) / m;
   }
   return uv;
 }
