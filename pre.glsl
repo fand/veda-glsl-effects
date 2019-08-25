@@ -50,3 +50,19 @@ vec2 iLowRes(vec2 uv, float t) {
   }
   return uv;
 }
+
+vec2 iRandomHoldX(vec2 uv) {
+  float xn = sin(uv.y * 179. - time * 1108.) * sin(uv.y * 329. + time * 207.) * 0.03;
+
+  float tt = floor(time * 7.);
+  float x1 = fract(tt * .23);
+  float x2 = fract(tt * .37);
+
+  float x = uv.x + xn;
+
+  if (x > x1 && x <= x2) {
+    uv.x = fract(x1 + uv.y * 2.8);
+  }
+
+  return uv;
+}
