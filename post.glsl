@@ -47,3 +47,14 @@ vec4 oCircleInvert(vec4 c, sampler2D tex, vec2 uv) {
 
   return c;
 }
+vec4 oDiaInvert(vec4 c, sampler2D tex, vec2 uv) {
+  vec2 p = uv * 2. - 1.;
+  p.x *= resolution.x / resolution.y;
+  p = rot(p, -time);
+
+  if (abs(p.x) + abs(p.y) < .9) {
+    c.rgb = 1. - c.rgb;
+  }
+
+  return c;
+}

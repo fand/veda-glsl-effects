@@ -71,6 +71,7 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   if (layer == 2) {
     c = oRandomDouble(c, tex, uv);
     c = oGlitchGreen(c, tex, uv);
+    c = oDiaInvert(c, tex, uv);
   }
 
   return c;
