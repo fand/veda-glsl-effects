@@ -41,7 +41,8 @@ vec2 pre(in vec2 uv, in int layer) {
   if (layer == 0) {
     // uv = iHoldX(uv, fract(time));
     // uv = iKaleido(uv, 1.);
-    uv = iRandomSlice(uv, fract(time), floor(time));
+    // uv = iRandomSlice(uv, fract(time), floor(time));
+    // uv = iRandomZoom(uv, fract(time), floor(time));
   }
   if (layer == 1) {
     // uv = iHoldX(uv, 1.);
@@ -50,9 +51,9 @@ vec2 pre(in vec2 uv, in int layer) {
   }
   if (layer == 2) {
     uv = iZoomOut(uv);
-    uv = iShiftX(uv);
+    // uv = iShiftX(uv);
     // uv = iLowRes(uv, fract(mod(time, 1.77)) - .7);
-    uv = iRandomHoldX(uv);
+    // uv = iRandomHoldX(uv);
   }
 
   return uv;
@@ -63,6 +64,7 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   c = texture2D(tex, uv);
 
   if (layer == 2) {
+    c = oRandomDouble(c, tex, uv);
     c = oGlitchGreen(c, tex, uv);
   }
 
