@@ -98,3 +98,24 @@ vec2 iZoomOutX(vec2 uv, float t) {
 
   return uv;
 }
+
+vec2 iSqueezeXY(vec2 uv) {
+  // uv.y = fract(uv.y+max(fract(uv.x* 3.) * 4. - 3., uv.y));
+  // uv.y = fract(uv.y - clamp(0., 1., fract(uv.x * 3. - time) * 4. - 3.));
+  // float s = clamp(0., 1., fract(uv.x * 3. -uv.y * 0.5 - time) * 4. - 3.);
+  // uv.y = fract(uv.y - fract(s * 3.));
+
+  float x = uv.x - uv.y * 0.4;
+
+  float offset = (
+    sin(x * 4. - time) *
+    sin(x * 17. - time) *
+    sin(x * 1000. - time * 1000.)
+  );
+
+  offset *= offset * offset;
+
+  uv.y += offset * 0.7;
+
+  return uv;
+}

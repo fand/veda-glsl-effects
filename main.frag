@@ -55,6 +55,7 @@ vec2 pre(in vec2 uv, in int layer) {
     // uv = iShiftX(uv);
     // uv = iLowRes(uv, fract(mod(time, 1.77)) - .7);
     // uv = iRandomHoldX(uv);
+    uv = iSqueezeXY(uv);
   }
 
   return uv;
