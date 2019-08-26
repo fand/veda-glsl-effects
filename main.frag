@@ -40,11 +40,13 @@ uniform float volume;
 vec2 pre(in vec2 uv, in int layer) {
   if (layer == 0) {
     // uv = iHoldX(uv, fract(time));
-    uv = iKaleido(uv, 1.);
+    // uv = iKaleido(uv, 1.);
+    uv = iRandomSlice(uv, fract(time), floor(time));
   }
   if (layer == 1) {
     // uv = iHoldX(uv, 1.);
     // uv = iRandomHoldX(uv);
+    uv = iRandomSlice(uv, fract(time), floor(time));
   }
   if (layer == 2) {
     uv = iZoomOut(uv);

@@ -52,7 +52,7 @@ vec2 iLowRes(vec2 uv, float t) {
 }
 
 vec2 iRandomHoldX(vec2 uv) {
-  float xn = sin(uv.y * 179. - time * 1108.) * sin(uv.y * 329. + time * 207.) * 0.03;
+  float xn = sin(uv.y * 179. - time * 1108.) * sin(uv.y * 329. + time * 207.) * 0.003;
 
   float tt = floor(time * 7.);
   float x1 = fract(tt * .23);
@@ -61,8 +61,18 @@ vec2 iRandomHoldX(vec2 uv) {
   float x = uv.x + xn;
 
   if (x > x1 && x <= x2) {
-    uv.x = fract(x1 + uv.y * 2.8);
+    uv.x = fract(x1 + uv.y * 3.);
   }
+
+  return uv;
+}
+
+vec2 iRandomSlice(vec2 uv, float t, float seed) {
+  vec2 uv1 = rot(uv, seed * 17.3);
+
+  float amp = exp(t * -10.);
+  uv1.x += sin(floor(uv1.y * 33.)) * amp * 0.4;
+  uv = rot(uv1, -seed * 17.3);
 
   return uv;
 }
