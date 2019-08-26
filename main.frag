@@ -41,8 +41,9 @@ vec2 pre(in vec2 uv, in int layer) {
   if (layer == 0) {
     // uv = iHoldX(uv, fract(time));
     // uv = iKaleido(uv, 1.);
-    // uv = iRandomSlice(uv, fract(time), floor(time));
+    uv = iRandomSlice(uv, fract(time), floor(time));
     // uv = iRandomZoom(uv, fract(time), floor(time));
+    uv = iZoomOutX(uv, clamp(0., 1., fract(time * 0.5) * 2.));
   }
   if (layer == 1) {
     // uv = iHoldX(uv, 1.);

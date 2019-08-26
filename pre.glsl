@@ -78,14 +78,21 @@ vec2 iRandomSlice(vec2 uv, float t, float seed) {
 }
 
 vec2 iRandomZoom(vec2 uv, float t, float seed) {
-  vec2 uv1 = rot(uv, seed * 17.3);
-
   uv -= .5;
   uv *= sin(floor(time * 3.7)) * sin(floor(time * 2.3)) * 0.4 + 0.5;
   uv = uv + vec2(
     sin(floor(time * 4.91)) * sin(floor(time * 3.21)) * 0.3,
     sin(floor(time * 9.01)) * sin(floor(time * 5.01)) * 0.1
   );
+  uv += .5;
+  uv = fract(uv);
+
+  return uv;
+}
+
+vec2 iZoomOutX(vec2 uv, float t) {
+  uv -= .5;
+  uv.x *= 4. * t;
   uv += .5;
   uv = fract(uv);
 
