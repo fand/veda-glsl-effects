@@ -65,6 +65,9 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   vec4 c = vec4(0);
   c = texture2D(tex, uv);
 
+  if (layer == 1) {
+    c = oCircleInvert(c, tex, uv);
+  }
   if (layer == 2) {
     c = oRandomDouble(c, tex, uv);
     c = oGlitchGreen(c, tex, uv);
@@ -87,4 +90,5 @@ void main() {
   vec4 c2 = draw(v2, uv, 2);
 
   gl_FragColor = mix(c0, c1, clamp(0., 1., sin(time) + .5)) + c2;
+  // gl_FragColor = c2;
 }

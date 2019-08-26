@@ -36,3 +36,14 @@ vec4 oRandomDouble(vec4 c, sampler2D tex, vec2 uv) {
 
   return c;
 }
+
+vec4 oCircleInvert(vec4 c, sampler2D tex, vec2 uv) {
+  vec2 p = uv * 2. - 1.;
+  p.x *= resolution.x / resolution.y;
+
+  if (length(p) < .9) {
+    c.rgb = 1. - c.rgb;
+  }
+
+  return c;
+}
