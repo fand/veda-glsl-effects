@@ -89,3 +89,17 @@ vec4 oFeedbackFlow(vec4 c, vec2 uv) {
 
   return c;
 }
+
+vec4 oFeedbackBluePink(vec4 c, vec2 uv) {
+  float d = floor(sin(floor(uv.x * 30. + time *1.7 +time * 0.91)) *17.) * 0.001;
+
+  vec4 c1 = texture2D(backbuffer, uv + vec2(d, sin(uv.x * 19.7 + time * 0.2) *sin(uv.x *38.9 + time * 0.13) *0.001));
+  vec4 c2 = texture2D(backbuffer, uv + vec2(-d, 0));
+
+  c += clamp((c1.r / c2.b), 0., 1.) * 0.3;
+  c.r -= (c1.r * c2.b) * 100.3;
+  c.g *= 0.7;
+  // c.g /= c2.r;
+
+  return c;
+}

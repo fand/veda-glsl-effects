@@ -94,7 +94,8 @@ void main() {
   vec4 c2 = draw(v2, uv, 2);
 
   vec4 c = c2;
-  c = oFeedbackFlow(c, uv);
+  // c = oFeedbackFlow(c, uv);
+  c = oFeedbackBluePink(c, uv);
 
   // gl_FragColor = mix(c0, c1, clamp(0., 1., sin(time) + .5)) + c2;
   gl_FragColor = c;
