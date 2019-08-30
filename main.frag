@@ -74,7 +74,7 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
     // c = oRandomDouble(c, tex, uv);
     // c = oGlitchGreen(c, tex, uv);
     // c = oDiaInvert(c, tex, uv);
-    c = oRandomXInvert(c, tex, uv);
+    // c = oRandomXInvert(c, tex, uv);
   }
 
   return c;
@@ -93,6 +93,9 @@ void main() {
   vec4 c1 = draw(v1, uv, 1);
   vec4 c2 = draw(v2, uv, 2);
 
+  vec4 c = c2;
+  c = oFeedbackFlow(c, uv);
+
   // gl_FragColor = mix(c0, c1, clamp(0., 1., sin(time) + .5)) + c2;
-  gl_FragColor = c2;
+  gl_FragColor = c;
 }
