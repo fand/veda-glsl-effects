@@ -41,21 +41,23 @@ vec2 pre(in vec2 uv, in int layer) {
   if (layer == 0) {
     // uv = iHoldX(uv, fract(time));
     // uv = iKaleido(uv, 1.);
-    uv = iRandomSlice(uv, fract(time), floor(time));
+    // uv = iRandomSlice(uv, fract(time), floor(time));
     // uv = iRandomZoom(uv, fract(time), floor(time));
-    uv = iZoomOutX(uv, clamp(0., 1., fract(time * 0.5) * 2.));
+    // uv = iZoomOutX(uv, clamp(0., 1., fract(time * 0.5) * 2.));
+    uv = iLensDist(uv, sin(time)  +1.5);
   }
   if (layer == 1) {
     // uv = iHoldX(uv, 1.);
     // uv = iRandomHoldX(uv);
-    uv = iRandomSlice(uv, fract(time), floor(time));
+    // uv = iRandomSlice(uv, fract(time), floor(time));
+    uv = iLensDist(uv, 1.);
   }
   if (layer == 2) {
     uv = iZoomOut(uv);
     // uv = iShiftX(uv);
     // uv = iLowRes(uv, fract(mod(time, 1.77)) - .7);
     // uv = iRandomHoldX(uv);
-    uv = iSqueezeXY(uv);
+    // uv = iSqueezeXY(uv);
   }
 
   return uv;
@@ -66,12 +68,13 @@ vec4 post(in sampler2D tex, in vec2 uv, in int layer) {
   c = texture2D(tex, uv);
 
   if (layer == 1) {
-    c = oCircleInvert(c, tex, uv);
+    // c = oCircleInvert(c, tex, uv);
   }
   if (layer == 2) {
-    c = oRandomDouble(c, tex, uv);
-    c = oGlitchGreen(c, tex, uv);
-    c = oDiaInvert(c, tex, uv);
+    // c = oRandomDouble(c, tex, uv);
+    // c = oGlitchGreen(c, tex, uv);
+    // c = oDiaInvert(c, tex, uv);
+    c = oRandomXInvert(c, tex, uv);
   }
 
   return c;

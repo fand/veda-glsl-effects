@@ -47,6 +47,7 @@ vec4 oCircleInvert(vec4 c, sampler2D tex, vec2 uv) {
 
   return c;
 }
+
 vec4 oDiaInvert(vec4 c, sampler2D tex, vec2 uv) {
   vec2 p = uv * 2. - 1.;
   p.x *= resolution.x / resolution.y;
@@ -54,6 +55,22 @@ vec4 oDiaInvert(vec4 c, sampler2D tex, vec2 uv) {
 
   if (abs(p.x) + abs(p.y) < .9) {
     c.rgb = 1. - c.rgb;
+  }
+
+  return c;
+}
+
+vec4 oRandomXInvert(vec4 c, sampler2D tex, vec2 uv) {
+  vec2 p = uv * 2. - 1.;
+
+  float f = (
+    sin(uv.y * 0.09 + floor(time * 19.7) * 3.7) *
+    sin(uv.y * 0.17 + floor(time * 80.2) * 1.9) *
+    sin(uv.y * 3.2 + floor(time * 7.3))
+  );
+
+  if (f > .8) {
+    c.rgba = 1. - texture2D(tex, uv + vec2(sin(f *20.) *0.02, 0));
   }
 
   return c;
