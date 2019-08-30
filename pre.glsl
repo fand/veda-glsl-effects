@@ -119,3 +119,15 @@ vec2 iSqueezeXY(vec2 uv) {
 
   return uv;
 }
+
+vec2 iLensDist(vec2 uv, float power) {
+  uv = uv * 2. - 1.;
+
+  float l = length(uv);
+  uv = normalize(uv) * atan(smoothstep(.0, 1., l * power) * 3.);
+
+  uv = uv * 0.5 + 0.5;
+  uv = clamp(uv, 0., 1.);
+
+  return uv;
+}
